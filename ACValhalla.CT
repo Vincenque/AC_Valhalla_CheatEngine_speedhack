@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Auto Assemble script"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+alloc(value,4)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+value:
+dd (float)4  // Set your speed here. 1 means default speed. 2 means its twice as fast etc.
+
+newmem:
+mulss xmm6,[value]
+
+originalcode:
+push rax
+mov rax,ACValhalla.exe+45264E4
+mulss xmm6,[rax]
+pop rax
+mov r8b,01
+cvttss2si rax,xmm0
+
+exit:
+jmp returnhere
+
+"ACValhalla.exe"+641095:
+jmp far newmem
+nop 2
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ACValhalla.exe"+641095:
+db F3 0F 59 35 47 54 EE 03 41 B0 01 F3 48 0F 2C C0
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey OnlyWhileDown="1">
+          <Action>Activate</Action>
+          <Keys>
+            <Key>86</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
